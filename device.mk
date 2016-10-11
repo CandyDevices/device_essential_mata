@@ -116,8 +116,7 @@ PRODUCT_PACKAGES += \
     android.frameworks.displayservice@1.0_32 \
     android.hardware.camera.provider@2.4-impl:32 \
     android.hardware.camera.provider@2.4-service \
-    libxml2 \
-    Snap
+    libxml2
 
 # Display
 PRODUCT_PACKAGES += \
@@ -310,6 +309,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     device/essential/mata/recovery/root/fstab.recovery.mata:recovery/root/fstab.recovery.mata \
     device/essential/mata/recovery/root/init.recovery.mata.rc:recovery/root/init.recovery.mata.rc
+
+# Remove unwanted packages
+PRODUCT_PACKAGES += \
+    RemovePackages
 
 # RenderScript HAL
 PRODUCT_PACKAGES += \
