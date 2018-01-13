@@ -1,0 +1,17 @@
+[
+  {
+    "repository": "CandyDevices/device_essential_mata",
+    "target_path": "device/essential/mata",
+    "branch": "c8.1"
+  },
+  {
+    "repository": "CandyDevices/proprietary_vendor_essential",
+    "target_path": "vendor/essential",
+    "branch": "c8.1"
+  },
+  {
+    "repository": "CandyDevices/kernel_essential_msm8998",
+    "target_path": "kernel/essential/msm8998",
+    "branch": "c8.1"
+  }
+]
