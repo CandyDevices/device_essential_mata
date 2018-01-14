@@ -31,3 +31,9 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
         PRIVATE_BUILD_DESC="mata-user 8.1.0 OPM1.180104.010 144 release-keys"
 
 BUILD_FINGERPRINT := essential/mata/mata:8.1.0/OPM1.180104.010/144:user/release-keys
+
+GAPPS_VARIANT := pico
+GAPPS_FORCE_MMS_OVERRIDES := true
+GAPPS_FORCE_DIALER_OVERRIDES := true
+GAPPS_FORCE_BROWSER_OVERRIDES := true
+$(call inherit-product-if-exists, vendor/opengapps/build/opengapps-packages.mk)
