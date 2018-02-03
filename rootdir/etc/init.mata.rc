@@ -586,7 +586,7 @@ on property:ro.boot.carrier.sku=*
     setprop ro.oem.key1 ${ro.boot.carrier.sku}
 
 on property:sys.boot_completed=1
-    setprop sys.io.scheduler bfq
+    setprop sys.io.scheduler fiops
 
     # Enable ZRAM
     swapon_all /vendor/etc/fstab.mata
