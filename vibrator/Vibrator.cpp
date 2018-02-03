@@ -26,17 +26,27 @@
 
 #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
 
-namespace android {
-namespace hardware {
-namespace vibrator {
-namespace V1_1 {
-namespace implementation {
-
+namespace {
 static constexpr int32_t MIN_VTG_INPUT = 120;
 static constexpr int32_t MAX_VTG_INPUT = 2750;
 
 static constexpr char MODE_DIRECT[] = "direct";
 static constexpr char MODE_BUFFER[] = "buffer";
+
+static constexpr int32_t WAVEFORM_CLICK_EFFECT_MS = 16;
+static constexpr uint8_t WAVEFORM_CLICK_EFFECT_SEQ[] = {
+    18, 24, 26, 40, 62, 0, 0, 0
+};
+
+static constexpr int32_t WAVEFORM_TICK_EFFECT_MS = 8;
+static constexpr uint8_t WAVEFORM_TICK_EFFECT_SEQ[] = {
+    18, 40, 62, 40, 16, 4, 0, 0
+};
+
+static constexpr uint32_t WAVEFORM_DOUBLE_CLICK_EFFECT_MS = 128;
+static constexpr uint8_t WAVEFORM_DOUBLE_CLICK_EFFECT_SEQ[] = {
+    62, 48, 24, 0, 0, 62, 48, 24
+};
 
 /*
  * Vibrator buffer mode
@@ -50,22 +60,57 @@ static constexpr char MODE_BUFFER[] = "buffer";
  *
  * Valid values of VALUE without overdrive (x2 voltage) range from
  * 0 to 31, for valid voltages of 0-3596
+ *
+ * Valid values of VALUE with overdrive (x2 voltage) range from
+ * 32 to 62, for valid voltages of 3712-7192
  */
+static int convertVoltageLevel(uint8_t voltageLevel) {
+    uint8_t val = 0;
 
-static constexpr int32_t WAVEFORM_CLICK_EFFECT_MS = 16;
-static constexpr uint8_t WAVEFORM_CLICK_EFFECT_SEQ[] = {
-    0x7e, 0x7e, 0x3e, 0x30, 0x24, 0x16, 0x00, 0x00
-};
+    if (voltageLevel > 62) {
+        return -EINVAL;
+    }
 
-static constexpr int32_t WAVEFORM_TICK_EFFECT_MS = 8;
-static constexpr uint8_t WAVEFORM_TICK_EFFECT_SEQ[] = {
-    0x3e, 0x00, 0x30, 0x30, 0x20, 0x08, 0x00, 0x00
-};
+    val = voltageLevel;
 
-static constexpr uint32_t WAVEFORM_DOUBLE_CLICK_EFFECT_MS = 128;
-static constexpr uint8_t WAVEFORM_DOUBLE_CLICK_EFFECT_SEQ[] = {
-    0x7e, 0x7e, 0x00, 0x00, 0x00, 0x00, 0x7e, 0x7e
-};
+    if (voltageLevel > 31) {
+        /* Divide value by 2, since setting bit 6 doubles value */
+        val = val >> 1;
+    }
+
+    /* Shift one bit, since bit 0 is unused */
+    val = val << 1;
+
+    /* Set bit 6 for overdrive */
+    if (voltageLevel > 31) {
+        val |= 0x40;
+    }
+
+    return val;
+}
+
+static int convertEffectStrength(
+        android::hardware::vibrator::V1_0::EffectStrength strength,
+        int voltageLevel) {
+    switch (strength) {
+    case android::hardware::vibrator::V1_0::EffectStrength::LIGHT:
+        /* Cut strength in half */
+        return voltageLevel >> 1;
+        break;
+    case android::hardware::vibrator::V1_0::EffectStrength::MEDIUM:
+    case android::hardware::vibrator::V1_0::EffectStrength::STRONG:
+    default:
+        return voltageLevel;
+        break;
+    }
+}
+} // anonymous namespace
+
+namespace android {
+namespace hardware {
+namespace vibrator {
+namespace V1_1 {
+namespace implementation {
 
 using Status = ::android::hardware::vibrator::V1_0::Status;
 
@@ -134,28 +179,8 @@ Return<Status> Vibrator::setAmplitude(uint8_t amplitude) {
         return Status::UNKNOWN_ERROR;
     }
 
-    ALOGI("Voltage set to: %d", voltage);
-
     return Status::OK;
 }
-
-#if 0
-static uint8_t convertEffectStrength(EffectStrength strength) {
-    uint8_t scale;
-
-    switch (strength) {
-    case EffectStrength::LIGHT:
-        scale = 2; // 50%
-        break;
-    case EffectStrength::MEDIUM:
-    case EffectStrength::STRONG:
-        scale = 1; // 100%
-        break;
-    }
-
-    return scale;
-}
-#endif
 
 Return<void> Vibrator::perform(Effect effect, EffectStrength strength,
         perform_cb _hidl_cb) {
@@ -164,16 +189,17 @@ Return<void> Vibrator::perform(Effect effect, EffectStrength strength,
 
     if (effect == Effect::CLICK) {
         for (uint32_t i = 0; i < ARRAY_SIZE(WAVEFORM_CLICK_EFFECT_SEQ); i++) {
-            mBuffers[i] << std::hex <<
-                static_cast<int>(WAVEFORM_CLICK_EFFECT_SEQ[i]) << std::endl;
+            mBuffers[i] << std::hex << convertEffectStrength(strength,
+                    convertVoltageLevel(WAVEFORM_CLICK_EFFECT_SEQ[i])) <<
+                std::endl;
         }
         mBufferUpdate << 1 << std::endl;
         timeMS = mClickDuration;
     } else if (effect == Effect::DOUBLE_CLICK) {
         for (uint32_t i = 0; i < ARRAY_SIZE(WAVEFORM_DOUBLE_CLICK_EFFECT_SEQ);
                 i++) {
-            mBuffers[i] << std::hex <<
-                static_cast<int>(WAVEFORM_DOUBLE_CLICK_EFFECT_SEQ[i]) <<
+            mBuffers[i] << std::hex << convertEffectStrength(strength,
+                    convertVoltageLevel(WAVEFORM_DOUBLE_CLICK_EFFECT_SEQ[i])) <<
                 std::endl;
         }
         mBufferUpdate << 1 << std::endl;
@@ -183,7 +209,6 @@ Return<void> Vibrator::perform(Effect effect, EffectStrength strength,
         return Void();
     }
 
-    /* TODO: effect strength scaling? */
     on(timeMS, true /* isWaveform */);
 
     _hidl_cb(status, timeMS);
@@ -197,8 +222,9 @@ Return<void> Vibrator::perform_1_1(Effect_1_1 effect, EffectStrength strength,
 
     if (effect == Effect_1_1::TICK) {
         for (uint32_t i = 0; i < ARRAY_SIZE(WAVEFORM_TICK_EFFECT_SEQ); i++) {
-            mBuffers[i] << std::hex <<
-                static_cast<int>(WAVEFORM_TICK_EFFECT_SEQ[i]) << std::endl;
+            mBuffers[i] << std::hex << convertEffectStrength(strength,
+                    convertVoltageLevel(WAVEFORM_TICK_EFFECT_SEQ[i])) <<
+                std::endl;
         }
         mBufferUpdate << 1 << std::endl;
         timeMS = mTickDuration;
@@ -209,7 +235,6 @@ Return<void> Vibrator::perform_1_1(Effect_1_1 effect, EffectStrength strength,
         return Void();
     }
 
-    /* TODO: effect strength scaling? */
     on(timeMS, true /* isWaveform */);
 
     _hidl_cb(status, timeMS);
