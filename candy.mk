@@ -28,8 +28,9 @@ PRODUCT_RELEASE_NAME := mata
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
         PRODUCT_NAME=mata \
-        BUILD_FINGERPRINT=essential/mata/mata:8.0.0/OPM1.170911.254/255:user/release-keys \
         PRIVATE_BUILD_DESC="mata-user 8.0.0 OPM1.170911.254 255 release-keys"
+
+BUILD_FINGERPRINT : =essential/mata/mata:8.0.0/OPM1.170911.254/255:user/release-keys
 
 GAPPS_VARIANT := pico
 GAPPS_FORCE_MMS_OVERRIDES := true
