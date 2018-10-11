@@ -13,8 +13,8 @@
     "branch": "lineage-16.0"
   },
   {
-    "repository": "platform_vendor_gapps",
-    "target_path": "vendor/kronicgapps",
-    "remote": "aosip"
+    "repository": "spaceman860/android_vendor_pixelgapps",
+    "target_path": "vendor/pixelgapps",
+    "remote": "p9x"
   }
 ]
