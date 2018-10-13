@@ -15,6 +15,6 @@
   {
     "repository": "spaceman860/android_vendor_pixelgapps",
     "target_path": "vendor/pixelgapps",
-    "remote": "p9x"
+    "branch": "p9x"
   }
 ]
