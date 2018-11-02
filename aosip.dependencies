@@ -13,6 +13,7 @@
     "branch": "lineage-16.0"
   },
   {
+    "remote": "gitlab",
     "repository": "spaceman860/android_vendor_pixelgapps",
     "target_path": "vendor/pixelgapps",
     "branch": "p9x"
