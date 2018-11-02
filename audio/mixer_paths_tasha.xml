@@ -2785,6 +2785,10 @@
     <path name="unprocessed-mic">
         <path name="unprocessed-handset-mic" />
     </path>
+    
+    <path name="unprocessed-stereo-mic">
+        <path name="unprocessed-handset-mic" />
+    </path>
 
     <!-- Added for ADSP testfwk -->
     <path name="ADSP testfwk">
