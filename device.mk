@@ -172,7 +172,8 @@ PRODUCT_COPY_FILES += \
     device/essential/mata/keylayout/uinput-fpc.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/uinput-fpc.kl
 
 # GApps
-$(call inherit-product-if-exists, vendor/pixelgapps/pixel-gapps.mk)
+GAPPS_VARIANT := nano
+$(call inherit-product, vendor/opengapps/build/opengapps-packages.mk)
 
 # Gatekeeper HAL
 PRODUCT_PACKAGES += \
