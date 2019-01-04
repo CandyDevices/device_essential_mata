@@ -149,9 +149,6 @@ TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/config.fs
 # HWUI
 HWUI_COMPILE_FOR_PERF := true
 
-# IPA
-USE_DEVICE_SPECIFIC_DATA_IPA_CFG_MGR := true
-
 # Kernel
 BOARD_KERNEL_CMDLINE := androidboot.hardware=mata ehci-hcd.park=3 schedstats=disable
 BOARD_KERNEL_CMDLINE += service_locator.enable=1 loop.max_part=7
