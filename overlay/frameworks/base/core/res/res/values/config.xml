@@ -412,4 +412,7 @@
     <bool name="call_recording_enabled">true</bool>
     <integer name="call_recording_audio_source">4</integer>
 
+    <!-- Specify custom blanking delay of the display -->
+    <integer name="config_screen_off_delay">0</integer>
+
 </resources>
