@@ -2861,7 +2861,7 @@
         <ctl name="SLIMBUS_7_RX Audio Mixer MultiMedia8" value="1" />
     </path>
 
-<!-- VoIP Rx settings -->
+    <!-- VoIP Rx settings -->
     <path name="audio-playback-voip">
       <ctl name="QUAT_MI2S_RX Audio Mixer MultiMedia10" value="1" />
     </path>
@@ -2957,6 +2957,14 @@
 
     <path name="mqa-playback usb-headset">
         <ctl name="USB_AUDIO_RX Audio Mixer MultiMedia4" value="1" />
+
+    <path name="mqa-playback">
+    </path>
+
+    <path name="mqa-playback usb-headphones">
+    </path>
+
+    <path name="mqa-playback usb-headset">
     </path>
 
     <path name="voice-rx">
@@ -2982,6 +2990,10 @@
     <path name="incall-music-uplink-mic-mute">
         <path name="incall-music-uplink" />
         <ctl name="DEC7 Volume" value="0" />
+        <ctl name="DEC5 Volume" value="0" />
+        <ctl name="DEC6 Volume" value="0" />
+        <ctl name="DEC7 Volume" value="0" />
+        <ctl name="DEC8 Volume" value="0" />
     </path>
 
     <path name="incall-rec-downlink-earpiece-mute">
