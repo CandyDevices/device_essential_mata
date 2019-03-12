@@ -3,10 +3,11 @@
     "repository": "kernel_essential_msm8998",
     "target_path": "kernel/essential/msm8998"
   },
-  {
-    "repository": "vendor_essential",
-    "target_path": "vendor/essential"
-  },
+{
+    "repository": "SecretIngredients/proprietary_vendor_essential",
+    "target_path": "vendor_essential",
+    "branch": "c9.0"
+ },
   {
     "repository" : "LineageOS/android_packages_resources_devicesettings",
     "target_path": "packages/resources/devicesettings",
