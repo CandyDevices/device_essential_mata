@@ -5,7 +5,7 @@
   },
 {
     "repository": "SecretIngredients/proprietary_vendor_essential",
-    "target_path": "vendor_essential",
+    "target_path": "vendor/essential",
     "branch": "c9.0"
  },
   {
