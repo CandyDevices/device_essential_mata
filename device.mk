@@ -162,11 +162,11 @@ PRODUCT_COPY_FILES += \
 # GApps
 GAPPS_VARIANT := nano
 GAPPS_FORCE_WEBVIEW_OVERRIDES := true
-GAPPS_FORCE_MMS_OVERRIDES := true
 GAPPS_FORCE_DIALER_OVERRIDES := true
 GAPPS_FORCE_BROWSER_OVERRIDES := true
-GAPPS_PRODUCT_PACKAGES += Clock
-GAPPS_PACKAGE_OVERRIDES := Clock
+GAPPS_FORCE_MMS_OVERRIDES := true
+GAPPS_PACKAGE_OVERRIDES := Browser2
+GAPPS_PRODUCT_PACKAGES += CalculatorGoogle PrebuiltDeskClockGoogle YouTube Photos Maps GoogleNow
 $(call inherit-product, vendor/opengapps/build/opengapps-packages.mk)
 
 # Gatekeeper HAL
