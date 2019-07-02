@@ -191,7 +191,7 @@ TARGET_RECOVERY_FSTAB := device/essential/mata/rootdir/etc/fstab.mata
 BOARD_ROOT_EXTRA_FOLDERS := bt_firmware dsp firmware persist
 
 # Security Patch Level
-VENDOR_SECURITY_PATCH := 2019-04-05
+VENDOR_SECURITY_PATCH := 2019-07-05
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
