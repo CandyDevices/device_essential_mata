@@ -54,7 +54,31 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=196610 \
     ro.qualcomm.cabl=2 \
     ro.sf.lcd_density=480 \
-    vendor.display.disable_partial_split=1
+    vendor.display.disable_partial_split=1 \
+    debug.gralloc.enable_fb_ubwc=1 \
+    debug.sf.enable_hwc_vds=1 \
+    debug.sf.latch_unsignaled=1 \
+    sdm.display.disable_skip_validate=1 \
+    vendor.display.rotator_downscale=1 \
+    sdm.perf_hint_window=50 \
+    debug.force_rtl=0 \
+    debug.composition.type=c2d \
+    debug.mdpcomp.idletime=600 \
+    persist.hwc.mdpcomp.enable=true \
+    persist.hwc.ptor.enable=true \
+    debug.enable.sglscale=1 \
+    debug.egl.hw=1 \
+    debug.sf.disable_hwc=0 \
+    debug.sf.recomputecrop=0 \
+    debug.sf.disable_backpressure=1 \
+    persist.hwc.mdpcomp.enable=true \
+    persist.hwc.ptor.enable=true \
+    debug.sf.gpu_comp_tiling=1
+
+# DPM
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.vendor.dpm.feature=1 \
+    persist.vendor.dpm.nsrm.bkg.evt=3955
 
 # Factory reset partition
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -83,6 +107,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.data.df.iwlan_mux=9 \
     persist.data.iwlan.enable=true \
     persist.data.mode=concurrent \
+    persist.vendor.data.mode=concurrent \
+    ro.vendor.use_data_netmgrd=true \
     persist.data.netmgrd.qos.enable=true \
     persist.radio.VT_CAM_INTERFACE=2 \
     persist.radio.VT_ENABLE=1 \
@@ -113,7 +139,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Time daemon
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.delta_time.enable=true
+    persist.delta_time.enable=true \
+    persist.timed.enable=true
 
 # USB
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -126,3 +153,18 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 # Wifi
 PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0
+
+# Wireless Display
+
+# ART
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.dex2oat-filter=speed \
+    dalvik.vm.image-dex2oat-filter=speed \
+    ro.vendor.qti.am.reschedule_service=true \
+    ro.sys.fw.dex2oat_thread_count=8 \
+    dalvik.vm.boot-dex2oat-threads=8 \
+    dalvik.vm.dex2oat-threads=8 \
+    ro.vendor.qti.sys.fw.bg_apps_limit=60
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    vendor.gralloc.disable_wb_ubwc=1
