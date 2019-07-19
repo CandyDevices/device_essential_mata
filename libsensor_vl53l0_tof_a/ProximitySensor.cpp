@@ -23,7 +23,6 @@
 #include <sys/select.h>
 #include <cutils/log.h>
 #include <linux/input.h>
-#include <stdio.h>
 
 #include "configuration.h"
 #include "ProximitySensor.h"
@@ -205,7 +204,7 @@ again:
 				mPendingEvent.type = SENSOR_TYPE_META_DATA;
 				mPendingEvent.meta_data.what = META_DATA_FLUSH_COMPLETE;
 				LOGE("Send META_DATA_FLUSH_COMPLETE event\n");
-				
+
 			} else {
 				if (mPendingEvent.type != SENSOR_TYPE_TIME_OF_FLIGHT) { 
 					//Revert back to normal Event from a Meta Event
@@ -214,7 +213,7 @@ again:
 		    		mPendingEvent.sensor = ID_P;
 		    		mPendingEvent.type = SENSOR_TYPE_TIME_OF_FLIGHT;
 		    		memset(mPendingEvent.data, 0, sizeof(mPendingEvent.data));
-		    		
+
 				} 
 
 	            if (event->code == EVENT_TYPE_PROXIMITY) {
@@ -269,9 +268,9 @@ again:
 					mPendingEvent.data[9] = event->value;	
 				else if (event->code == ABS_PRESSURE) 
 					mPendingEvent.data[10] = event->value;	
-				
+
 				#endif /* End of New CODE */
-				
+
 				else if (event->code == ABS_HAT3Y) {
 					dmax = event->value;
 
@@ -343,12 +342,12 @@ LOGE("errorcode: %f,dmax: %f\n", errorcode, dmax);
 
 int ProximitySensor::flush(int32_t handle)
 {
-	
+
     int fd = -1;
 	int err = -1;
 	LOGE("ProximitySensor::flush called\n");
 
-	
+
     strcpy(&input_sysfs_path[input_sysfs_path_len], "/do_flush");
     fd = open(input_sysfs_path, O_RDWR);
     if (fd >= 0) {
