@@ -15,8 +15,8 @@
 #
 
 # Board
-PRODUCT_USES_QCOM_HARDWARE := true
-PRODUCT_BOARD_PLATFORM := msm8998
+BOARD_USES_QCOM_HARDWARE := true
+TARGET_BOARD_PLATFORM := msm8998
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += device/essential/mata/overlay

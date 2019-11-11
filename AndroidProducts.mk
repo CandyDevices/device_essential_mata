@@ -15,4 +15,9 @@
 #
 
 PRODUCT_MAKEFILES += \
-    device/essential/mata/statix_mata.mk
+    device/essential/mata/candy_mata.mk
+    
+COMMON_LUNCH_CHOICES := \
+    candy_mata-user \
+    candy_mata-userdebug \
+    candy_mata-eng
