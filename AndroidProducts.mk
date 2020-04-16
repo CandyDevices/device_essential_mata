@@ -15,4 +15,4 @@
 #
 
 PRODUCT_MAKEFILES += \
-    device/essential/mata/carbon_mata.mk
+    device/essential/mata/candy_mata.mk

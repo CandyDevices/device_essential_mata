@@ -1,0 +1,12 @@
+[
+  {
+    "repository": "CandyDevices/kernel_essential_msm8998",
+    "target_path": "kernel/essential/msm8998",
+    "branch": "c10"
+  },
+  {
+    "repository": "SecretIngredients/vendor_essential",
+    "target_path": "vendor/essential",
+    "branch": "c10"
+  }
+]
