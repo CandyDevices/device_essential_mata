@@ -15,9 +15,9 @@
 #
 
 PRODUCT_MAKEFILES += \
-    device/essential/mata/aosp_mata.mk
+    device/essential/mata/candy_mata.mk
 
 COMMON_LUNCH_CHOICES := \
-    aosp_mata-user \
-    aosp_mata-userdebug \
-    aosp_mata-eng
+    candy_mata-user \
+    candy_mata-userdebug \
+    candy_mata-eng
